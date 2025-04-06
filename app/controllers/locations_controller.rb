@@ -1,4 +1,6 @@
 class LocationsController < ApplicationController
+  allow_unauthenticated_access only: :index  # Replaces except: :index
+  before_action :require_authentication, except: :index
 
   def index
     locations = Location.all.includes(:user)
@@ -7,7 +9,7 @@ class LocationsController < ApplicationController
     }
   end
   def create
-    location = current_user.locations.build(location_params)
+      location = Current.session.use.locations.build(location_params)
     if location.save
       redirect_to locations_path, notice: 'Location created successfully'
     else
