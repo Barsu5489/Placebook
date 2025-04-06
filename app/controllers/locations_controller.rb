@@ -14,5 +14,9 @@ class LocationsController < ApplicationController
       redirect_to locations_path, alert: location.errors.full_messages.join(', ')
     end
   end
-  
+  private
+
+def location_params
+  params.require(:location).permit(:name, :latitude, :longitude)
+end
 end
