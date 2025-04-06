@@ -45,6 +45,13 @@ const Login = () => {
           >
             {processing ? 'Signing in...' : 'Sign in'}
           </button>
+
+          <p className="mt-4 text-center text-sm text-gray-600">
+            Don't have an account?{' '}
+            <a href="/signup" className="text-blue-500 hover:text-blue-700">
+              Create one
+            </a>
+          </p>
         </form>
       </div>
     </div>
