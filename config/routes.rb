@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   # Registration routes
   get 'signup', to: 'registrations#new'
   post 'signup', to: 'registrations#create'
+  # Registration routes
+  resources :locations, only: [:index, :create]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
