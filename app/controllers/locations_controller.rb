@@ -3,7 +3,7 @@ class LocationsController < ApplicationController
   before_action :require_authentication, except: :index
 
   def index
-    locations = Location.all.includes(:user)
+    locations = Current.session&.user&.locations || Location.non
     render inertia: 'Locations/Index', props: {
       locations: locations.as_json(include: { user: { only: [:id, :name] } })
     }
