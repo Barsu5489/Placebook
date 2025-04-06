@@ -6,5 +6,13 @@ class LocationsController < ApplicationController
       locations: locations.as_json(include: { user: { only: [:id, :name] } })
     }
   end
+  def create
+    location = current_user.locations.build(location_params)
+    if location.save
+      redirect_to locations_path, notice: 'Location created successfully'
+    else
+      redirect_to locations_path, alert: location.errors.full_messages.join(', ')
+    end
+  end
   
 end
