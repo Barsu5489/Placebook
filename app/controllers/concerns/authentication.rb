@@ -26,20 +26,20 @@ module Authentication
 
     def require_authentication
       unless authenticated?
-        redirect_to login_path, alert: 'Please log in to continue.'
+        redirect_to login_path, alert: "Please log in to continue."
       end
     end
 
     def start_new_session_for(user)
       Rails.logger.debug "Creating new session for user: #{user.id}"
-      
+
       session = user.sessions.create!(
         user_agent: request.user_agent,
         ip_address: request.remote_ip
       )
-      
+
       Current.session = session
-      
+
       cookies.signed[:session_id] = {
         value: session.id,
         httponly: true,
@@ -47,7 +47,7 @@ module Authentication
         same_site: :lax,
         expires: 30.days.from_now
       }
-      
+
       Rails.logger.debug "New session created with ID: #{session.id}"
       session
     end
