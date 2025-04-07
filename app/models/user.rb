@@ -8,4 +8,7 @@ class User < ApplicationRecord
 
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true, on: :create
+  def admin?
+    admin
+  end
 end
