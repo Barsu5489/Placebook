@@ -2,10 +2,11 @@ class ApplicationController < ActionController::Base
   include Authentication
   inertia_share auth: -> {
     {
-      user: Current.session&.user&.as_json(only: [ :id, :email_address, :name ]),
+      user: Current.session&.user&.as_json(only: [ :id, :email_address, :name, :admin]),
       logged_in: authenticated?
     }
   }
+  
   inertia_share flash: -> {
     {
       success: flash.notice,
@@ -17,7 +18,7 @@ class ApplicationController < ActionController::Base
 end
 # app/controllers/locations_controller.rb
 class LocationsController < ApplicationController
-  allow_unauthenticated_access only: :index  # Replaces except: :index
+  allow_unauthenticated_access only: :index 
   before_action :require_authentication, except: :index
 
     def index
