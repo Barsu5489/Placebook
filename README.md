@@ -1,6 +1,6 @@
 # Placebook
 
-Placebook is a sophisticated web application built with modern technologies that enables users to create, manage, and explore locations on an interactive map. With a robust authentication system and seamless user experience.
+Placebook is a web application built with modern technologies that enables users to create, manage, and explore maps.
 
 ## Table of Contents
 - [Features](#features)
@@ -83,7 +83,7 @@ Placebook follows a modern architecture combining Rails backend with React front
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/placebook.git
+   git clone https://github.com/Barsu5489/placebook.git
    cd placebook
    ```
 
