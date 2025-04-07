@@ -1,6 +1,17 @@
 class ApplicationController < ActionController::Base
   include Authentication
-  inertia_share flash: -> { flash.to_hash }
+  inertia_share auth: -> {
+    {
+      user: Current.session&.user&.as_json(only: [:id, :email_address, :name]),
+      logged_in: authenticated?
+    }
+  }
+  inertia_share flash: -> {
+    {
+      success: flash.notice,
+      error: flash.alert
+    }.compact
+  }
   inertia_share current_user: -> { Current.session&.user }
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
 
@@ -18,7 +29,7 @@ class LocationsController < ApplicationController
     end
   
     def create
-      location = Current.session.use.locations.build(location_params)
+      location = Current.session.user.locations.build(location_params)
       if location.save
         redirect_to locations_path, notice: 'Location created successfully'
       else

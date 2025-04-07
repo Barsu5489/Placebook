@@ -3,9 +3,13 @@ class LocationsController < ApplicationController
   before_action :require_authentication
 
   def index
+    Rails.logger.debug "LocationsController#index - Session ID: #{cookies.signed[:session_id]}"
+    Rails.logger.debug "Current Session: #{Current.session&.id}"
+    
     locations = Current.session&.user&.locations || Location.none
     render inertia: 'Locations/Index', props: {
-      locations: locations.as_json(include: { user: { only: [:id, :name] } })
+      locations: locations.as_json(include: { user: { only: [:id, :name] } }),
+      current_user: Current.session&.user&.as_json(only: [:id, :email_address, :name])
     }
   end
   def create
@@ -20,12 +24,6 @@ class LocationsController < ApplicationController
 
 def location_params
   params.require(:location).permit(:name, :latitude, :longitude)
-end
-
-def require_authentication
-  unless Current.session&.user
-    redirect_to new_session_path, alert: 'You must be logged in to access this section.'
-  end
 end
 
 end
