@@ -103,13 +103,20 @@ Placebook follows a modern architecture combining Rails backend with React front
   
    ```
 
-4. **Start the development servers**:
+5. **install react-leaflet**:
+   ```bash
+   npm install react-leaflet leaflet
+
+   ```
+
+
+5. **Start the development servers**:
    ```bash
    bin/dev
 
    ```
 
-5. **Access the application**:
+6. **Access the application**:
    Open your browser and navigate to `http://127.0.0.1:3100`
 
 ## Development Workflow
