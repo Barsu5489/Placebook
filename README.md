@@ -1,18 +1,20 @@
 # Placebook
 
-Placebook is a sophisticated web application built with modern technologies that enables users to create, manage, and explore locations on an interactive map. With a robust authentication system and seamless user experience, it serves as an excellent platform for sharing and discovering places.
+Placebook is a sophisticated web application built with modern technologies that enables users to create, manage, and explore locations on an interactive map. With a robust authentication system and seamless user experience.
 
 ## Table of Contents
 - [Features](#features)
 - [Architecture](#architecture)
 - [Technologies](#technologies)
 - [Setup and Installation](#setup-and-installation)
+- [Admin Functionality](#admin-functionality)
 - [Development Workflow](#development-workflow)
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
 - [Security](#security)
 - [Contributing](#contributing)
 - [License](#license)
+
 
 ## Features
 
@@ -98,7 +100,7 @@ Placebook follows a modern architecture combining Rails backend with React front
    ```bash
    rails db:create
    rails db:migrate
-   rails db:seed # Optional, for sample data
+  
    ```
 
 4. **Start the development servers**:
@@ -142,6 +144,56 @@ rails db:rollback
 rails db:reset
 ```
 
+## Admin Functionality
+
+Placebook includes an admin dashboard that allows administrators to manage users.
+
+### Admin Features
+
+- User Management: View all users and delete user accounts
+- Secure Authentication: Only users with admin privileges can access the admin dashboard
+- Protected Routes: Admin-only routes with proper authorization checks
+
+### Setting Up an Admin User
+
+There are several ways to create an admin user:
+
+#### Method 1: Using Seeds (Recommended for Development)
+
+The application includes a seed file that creates an admin user with secure credentials:
+
+```bash
+# Run the seed file
+rails db:seed
+
+# With custom admin credentials
+ADMIN_EMAIL=your-email@example.com ADMIN_PASSWORD=your-secure-password rails db:seed
+```
+
+The seed file will output the admin credentials in the console. If you don't provide an email and password via environment variables, it will use a default email ('admin@example.com') and generate a secure random password for you.
+
+#### Method 2: Using Rails Console
+
+You can also create or promote a user to admin using the Rails console:
+
+```bash
+rails c
+user = User.find_by(email_address: "user@example.com")  # Find existing user
+user.update(admin: true)                                # Make them an admin
+exit
+```
+
+### Accessing Admin Features
+
+1. Log in with an admin account
+2. You'll see an "Admin" button in the navigation bar
+3. Click the button to access the admin dashboard
+4. From the dashboard, you can:
+   - View all users in the system
+   - Delete user accounts (warning: this action cannot be undone!)
+
+
+
 ## API Documentation
 
 ### Authentication Endpoints
@@ -165,15 +217,11 @@ rails db:reset
 Placebook uses RSpec for testing. The test suite includes:
 
 - **Model Tests**: Validations, associations, and business logic
-- **Controller Tests**: Request/response cycles and authentication
-- **Integration Tests**: End-to-end user flows
+
 
 ### Key Test Files
 - `spec/models/user_spec.rb`: User model tests
 - `spec/models/location_spec.rb`: Location model tests
-- `spec/controllers/sessions_controller_spec.rb`: Authentication tests
-
-
 
 ## Security
 
@@ -200,3 +248,4 @@ Please ensure your code follows our style guidelines and includes appropriate te
 ## License
 
 This project is licensed under the MIT License
+
