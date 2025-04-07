@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Authentication routes
   get "login", to: "sessions#new"
   post "login", to: "sessions#create"
-  # delete 'logout', to: 'sessions#destroy'
+  delete 'logout', to: 'sessions#destroy'
 
   # Registration routes
   get "signup", to: "registrations#new"
