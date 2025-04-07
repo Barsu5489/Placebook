@@ -1,14 +1,18 @@
 Rails.application.routes.draw do
+  root "home#index"
   resource :session
   resources :passwords, param: :token
   # Authentication routes
-  get 'login', to: 'sessions#new'
-  post 'login', to: 'sessions#create'
-  delete 'logout', to: 'sessions#destroy'
-  
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
+  # delete 'logout', to: 'sessions#destroy'
+
   # Registration routes
-  get 'signup', to: 'registrations#new'
-  post 'signup', to: 'registrations#create'
+  get "signup", to: "registrations#new"
+  post "signup", to: "registrations#create"
+  # Registration routes
+  resource :session, only: [ :new, :create, :destroy ]
+  resources :locations, only: [ :index, :create ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -19,6 +23,4 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
-
-  root "pages#home"
 end

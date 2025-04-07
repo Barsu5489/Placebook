@@ -1,27 +1,31 @@
 class SessionsController < ApplicationController
-  allow_unauthenticated_access only: %i[ new create ]
+  skip_before_action :require_authentication, only: [ :new, :create ]
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_session_url, alert: "Try again later." }
 
   def new
-    render inertia: "Login"
+    if authenticated?
+      redirect_to locations_path
+    else
+      render inertia: "Login"
+    end
   end
 
   def create
-    Rails.logger.info "Login attempt params: #{params.inspect}"
-    if user = User.authenticate_by(params.permit(:email_address, :password))
-      Rails.logger.info "User authenticated: #{user.email_address}"
-      start_new_session_for user
-      redirect_to after_authentication_url
+    Rails.logger.debug "Login attempt for email: #{params[:email_address]}"
+
+    if user = User.authenticate_by(email_address: params[:email_address], password: params[:password])
+      Rails.logger.debug "User authenticated successfully: #{user.id}"
+      session = start_new_session_for(user)
+      Rails.logger.debug "Session created: #{session.id}"
+
+      redirect_to locations_path
     else
-      Rails.logger.info "Authentication failed"
-      redirect_to new_session_path, 
-        inertia: { errors: { email_address: "Invalid email or password" } },
-        alert: "Try another email address or password."
+      redirect_to login_path, alert: "Invalid email or password"
     end
   end
 
   def destroy
     terminate_session
-    redirect_to new_session_path
+    redirect_to root_path
   end
 end
