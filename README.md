@@ -10,7 +10,6 @@ Placebook is a sophisticated web application built with modern technologies that
 - [Development Workflow](#development-workflow)
 - [API Documentation](#api-documentation)
 - [Testing](#testing)
-- [Deployment](#deployment)
 - [Security](#security)
 - [Contributing](#contributing)
 - [License](#license)
@@ -66,20 +65,15 @@ Placebook follows a modern architecture combining Rails backend with React front
 
 ### Development & Testing
 - **RSpec**: Testing framework
-- **Factory Bot**: Test data generation
-- **Shoulda Matchers**: Test assertion helpers
 - **Faker**: Realistic test data generation
 - **Rubocop**: Code style enforcement
-
-### Deployment
-- **Docker**: Containerization for consistent deployment
-- **Kamal**: Deployment automation tool
 
 ## Setup and Installation
 
 ### Prerequisites
 - Ruby 3.3.0
-- Node.js and npm
+- Node.js verson 20 and above
+- npm
 - SQLite3
 - Git
 
@@ -109,16 +103,12 @@ Placebook follows a modern architecture combining Rails backend with React front
 
 4. **Start the development servers**:
    ```bash
-   # Using foreman or overmind (preferred)
    bin/dev
-   
-   # Or manually in separate terminals
-   rails server
-   npm run dev
+
    ```
 
 5. **Access the application**:
-   Open your browser and navigate to `http://localhost:3000`
+   Open your browser and navigate to `http://127.0.0.1:3100`
 
 ## Development Workflow
 
